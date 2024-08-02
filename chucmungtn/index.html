@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(to bottom, #4facfe 0%, #00f2fe 100%);
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+        }
+        .message, .second-message, .image-container {
+            color: white;
+            font-size: 3rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            transition: opacity 1s ease-in-out;
+            opacity: 0;
+        }
+        .second-message {
+            color: red;
+            margin-top: 20px;
+        }
+        .confetti {
+            position: absolute;
+            top: -10%;
+            width: 10px;
+            height: 10px;
+            background: white;
+            opacity: 0.6;
+            transform-origin: left top;
+            animation: confetti-fall 5s infinite;
+        }
+        @keyframes confetti-fall {
+            0% { 
+                transform: translateY(-10%) rotate(0deg);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 1;
+            }
+        }
+        img {
+            width: 200px;
+            height: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="message" id="message">Chúc mừng cậu đã tốt nghiệp!</div>
+    <div class="image-container" id="image-container">
+        <img src="./image-removebg-preview.png" alt="Congratulations Image">
+    </div>
+    <div class="second-message" id="second-message">Chúc cậu sẽ luôn có nhiều niềm vui hạnh phúc và thành công trong con đường phía trước</div>
+    <script>
+        const colors = ['#FF0A47', '#FF67C1', '#A5F802', '#F49C00', '#00B7F4', '#D4F4FF'];
+
+        function createConfettiPiece() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.left = `${Math.random() * 100}vw`;
+            confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+            document.body.appendChild(confetti);
+
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+
+        function createContinuousConfetti() {
+            setInterval(createConfettiPiece, 100);
+        }
+
+        for (let i = 0; i < 200; i++) {
+            setTimeout(createConfettiPiece, i * 50);
+        }
+
+        setTimeout(() => {
+            document.getElementById('message').style.opacity = 1;
+            document.getElementById('image-container').style.opacity = 1;
+        }, 1000);
+
+        setTimeout(() => {
+            document.getElementById('second-message').style.opacity = 1;
+        }, 2000);
+
+        createContinuousConfetti();
+    </script>
+</body>
+</html>
